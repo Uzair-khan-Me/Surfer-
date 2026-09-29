@@ -50,6 +50,9 @@ export function batchStatic(group: T.Group) {
         colors[i * 3 + 2] = source.color.b * (old ? old.getZ(i) : 1);
       }
       geometry.setAttribute("color", new T.BufferAttribute(colors, 3));
+      // Palette materials carry no texture map, so the interpolated uv set is
+      // dead weight in every merged batch (8 of 44 bytes per vertex).
+      geometry.deleteAttribute("uv");
     }
     const list = batches.get(target) || [];
     list.push(geometry);
