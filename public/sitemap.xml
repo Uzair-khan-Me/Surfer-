@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://surfer-pc.vercel.app/</loc>
+    <lastmod>2026-09-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://surfer-pc.vercel.app/og-image.png</image:loc>
+      <image:title>Afterlight Run — Free Neon City Endless Runner Game</image:title>
+      <image:caption>Afterlight Run menu screen: a neon transit district at night with the title AFTERLIGHT RUN over three railway lanes</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://surfer-pc.vercel.app/screenshots/menu-desktop.png</image:loc>
+      <image:title>Afterlight Run start screen on desktop</image:title>
+      <image:caption>Afterlight Run start screen on desktop</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://surfer-pc.vercel.app/screenshots/gameplay-desktop.png</image:loc>
+      <image:title>Three-lane gameplay: traffic, coins and an orange barrier ahead</image:title>
+      <image:caption>Three-lane gameplay: traffic, coins and an orange barrier ahead</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://surfer-pc.vercel.app/screenshots/menu-mobile.png</image:loc>
+      <image:title>Afterlight Run on a phone with swipe controls</image:title>
+      <image:caption>Afterlight Run on a phone with swipe controls</image:caption>
+    </image:image>
+  </url>
+</urlset>

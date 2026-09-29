@@ -1,0 +1,85 @@
+{
+  "id": "/",
+  "name": "Afterlight Run — neon city endless runner",
+  "short_name": "Afterlight",
+  "description": "Play Afterlight Run free in your browser: a neon city 3D endless runner. Dodge trains, jump barriers, slide gates and chase your best score. No download.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "fullscreen",
+  "display_override": [
+    "fullscreen",
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "any",
+  "background_color": "#071b22",
+  "theme_color": "#071b22",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": [
+    "games",
+    "entertainment"
+  ],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/menu-desktop.png",
+      "sizes": "1440x900",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Afterlight Run start screen on desktop"
+    },
+    {
+      "src": "/screenshots/gameplay-desktop.png",
+      "sizes": "1440x900",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Three-lane gameplay: traffic, coins and an orange barrier ahead"
+    },
+    {
+      "src": "/screenshots/menu-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Afterlight Run on a phone with swipe controls"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "How to play",
+      "short_name": "Play",
+      "url": "/#how-to-play"
+    },
+    {
+      "name": "Frequently asked questions",
+      "short_name": "FAQ",
+      "url": "/#faq"
+    }
+  ]
+}
