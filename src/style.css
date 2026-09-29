@@ -85,6 +85,7 @@ a,
 .brand {
   display: flex;
   align-items: center;
+  white-space: nowrap;
   gap: 12px;
   font-weight: 800;
   font-size: 14px;
@@ -179,7 +180,7 @@ a,
   background: var(--lime);
   box-shadow: 0 0 9px #d5f84455;
 }
-h1 {
+.hero-title {
   font-family: "Barlow Condensed", Impact, "Arial Narrow", sans-serif;
   font-size: clamp(76px, 8.1vw, 126px);
   font-weight: 800;
@@ -189,7 +190,7 @@ h1 {
   margin: 26px 0 24px;
   position: relative;
 }
-h1 > span:first-of-type {
+.hero-title > span:first-of-type {
   color: var(--lime);
 }
 .title-star {
@@ -378,7 +379,7 @@ kbd {
   width: 33px;
   text-align: center;
 }
-footer {
+#footer {
   position: absolute;
   bottom: 29px;
   left: 4.5%;
@@ -389,12 +390,12 @@ footer {
   font-size: 8px;
   letter-spacing: 1.7px;
 }
-footer span {
+#footer span {
   display: flex;
   gap: 10px;
   align-items: center;
 }
-footer b {
+#footer b {
   color: var(--lime);
   font-size: 16px;
   margin-left: 8px;
@@ -628,7 +629,7 @@ footer b {
     bottom: 95px;
     padding: 30px 0;
   }
-  footer {
+  #footer {
     bottom: 40px;
   }
 }
@@ -636,7 +637,7 @@ footer b {
   .menu {
     top: 19%;
   }
-  h1 {
+  .hero-title {
     font-size: 90px;
     margin: 19px 0;
   }
@@ -654,7 +655,7 @@ footer b {
   .world-label {
     bottom: 25%;
   }
-  footer {
+  #footer {
     bottom: 21px;
   }
 }
@@ -705,6 +706,9 @@ footer b {
   .text-button {
     font-size: 8px;
   }
+  .hero-guide {
+    display: none;
+  }
   .text-button span {
     margin-left: 5px;
   }
@@ -720,7 +724,7 @@ footer b {
     font-size: 8px;
     letter-spacing: 1.5px;
   }
-  h1 {
+  .hero-title {
     font-size: clamp(67px, 14vw, 100px);
     line-height: 0.87;
     margin: 22px 0;
@@ -784,14 +788,14 @@ footer b {
     white-space: normal;
     max-width: 125px;
   }
-  footer {
+  #footer {
     left: 7%;
     right: 7%;
     bottom: 25px;
     font-size: 7px;
     letter-spacing: 1px;
   }
-  footer > span + span {
+  #footer > span + span {
     display: none;
   }
   #ui:before {
@@ -857,7 +861,7 @@ footer b {
     top: 22%;
     left: 6%;
   }
-  h1 {
+  .hero-title {
     font-size: 64px;
     margin: 14px 0;
   }
@@ -876,7 +880,7 @@ footer b {
     margin-top: 12px;
   }
   .control-strip,
-  footer,
+  #footer,
   .world-label {
     display: none;
   }
@@ -929,5 +933,37 @@ footer b {
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;
+  }
+}
+/* Creator credit in the hero, matching the "Maintained By" block on the hub. */
+.hero-credit {
+  margin: 26px 0 0;
+  font-size: 9px;
+  letter-spacing: 1.6px;
+  color: #8fa59f;
+  text-transform: uppercase;
+}
+.hero-credit a {
+  color: var(--lime);
+  font-weight: 700;
+  text-decoration: none;
+}
+.hero-credit a:hover {
+  text-decoration: underline;
+}
+.hero-credit small {
+  display: block;
+  margin-top: 4px;
+  font-size: 8px;
+  letter-spacing: 1.4px;
+  color: #7b938d;
+}
+.hero-guide {
+  text-decoration: none;
+  white-space: nowrap;
+}
+@media (max-height: 570px) {
+  .hero-credit {
+    display: none;
   }
 }

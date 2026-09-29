@@ -1,0 +1,31 @@
+# https://surfer-pc.vercel.app/robots.txt — every crawler is welcome.
+User-agent: *
+Allow: /
+# Internal page-search URLs are duplicates of the home page.
+Disallow: /*?q=
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://surfer-pc.vercel.app/sitemap.xml

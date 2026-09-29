@@ -70,9 +70,16 @@ src/
     Particles.ts          Reused instanced coin particles
   audio/AudioManager.ts   Optional Web Audio oscillator effects
   ui/UIManager.ts         Menu, HUD, help, pause and game-over UI
-public/assets/            Reserved for future original assets
+  content.css             Styles for the crawlable content layer
+  seo/                    Discoverability: one config feeds the page, sitemap, feed and PWA
+scripts/
+  seo-sync.ts             Rewrites index.html and public/ from src/seo/config.ts
+  seo-audit.ts            Audits the built output for missing SEO signals
+  generate-art.mjs        Renders icons, the social card and screenshots from the live game
+public/                   Icons, manifest, robots.txt, sitemap.xml, feed.xml, screenshots
  tests/
   core.test.ts            Simulation and generation tests
+  seo.test.ts             SEO invariants: generated files, schema, page health, search
   browser.mjs             Desktop and mobile browser acceptance tests
 ```
 
@@ -111,6 +118,95 @@ Test coverage includes:
 - Browser keyboard events, touch events, portrait (390×844) and landscape (844×390) layouts, with no page errors.
 
 The browser survival test advances the same production simulation in fixed steps; it is not a 65-second real-time manual playtest. Touch was verified through Chromium's emulated touch events, **not on physical phone hardware**.
+
+## SEO, discoverability and the creator section
+
+The site is one crawlable document. `index.html` ships the guide, the controls table, the
+FAQ, the release notes and the creator section as ordinary markup, so a crawler that never
+executes JavaScript still sees all of it (about 1,900 words). The canvas and the game
+interface sit on top of that content and only take over input while a run is active.
+
+Nothing about the page title, description, structured data, sitemap or feed is hand
+maintained in two places. One config file feeds all of them:
+
+| Output | Source of truth | Regenerate with |
+| --- | --- | --- |
+| `<head>` tags and the JSON-LD block in `index.html` | `src/seo/config.ts`, `src/seo/schema.ts` | `npm run seo:sync` |
+| `public/sitemap.xml` (with image entries) | same | `npm run seo:sync` |
+| `public/feed.xml` release feed | `src/seo/content.ts` | `npm run seo:sync` |
+| `public/manifest.webmanifest` | `src/seo/config.ts` | `npm run seo:sync` |
+| `public/robots.txt`, `public/browserconfig.xml` | same | `npm run seo:sync` |
+| `public/og-image.png` and `public/screenshots/*` | live frames of the running game | `npm run art` |
+| `dist/sw.js` offline precache + font preloads | the build output | `npm run build` |
+
+### What is in place
+
+- **Titles and snippets** — a 51-character title and 153-character description written for
+  the click, plus `robots` / `googlebot` / `bingbot` directives with
+  `max-image-preview:large` so thumbnails can be shown.
+- **Canonicalisation** — one canonical URL, `en` plus `x-default` hreflang alternates, a
+  `cleanUrls` config in `vercel.json`, and a 404 page that is `noindex, follow` and points
+  back at the canonical home page.
+- **Structured data** — a linked `@graph` with `WebSite` (including a `SearchAction`),
+  `WebPage`, `VideoGame` (offers at price 0, platforms, feature list, screenshots,
+  accessibility, `contentRating`), `HowTo`, `FAQPage` (13 questions), `Person` and
+  `ImageObject`, cross-referenced by `@id`.
+- **Social cards** — Open Graph and `summary_large_image` Twitter tags, all pointing at a
+  1200x630 card that is generated from a real frame of the game.
+- **Semantics and accessibility** — one `h1` and an ordered heading outline, `header`,
+  `nav`, `main` and `footer` landmarks, a skip link, a table with caption and `scope`
+  headers, a `dl` for the scoring rules, `details`/`summary` FAQ items, labelled buttons,
+  visible focus styles, `prefers-reduced-motion` and `prefers-contrast` support and print
+  styles.
+- **Internal linking** — a sticky section nav with `aria-current` scroll tracking, a footer
+  sitemap of sections, and deep links to every FAQ answer and HowTo step.
+- **On-page search** — a keyboard-accessible search box that indexes the guide, wired to
+  the `SearchAction` in structured data and shareable as `?q=coins`.
+- **Images** — alt text everywhere, intrinsic `width`/`height` to avoid layout shift, lazy
+  loading below the fold, descriptive filenames and sitemap image entries with titles and
+  captions.
+- **PWA** — a manifest with 192/512/maskable icons, screenshots, categories and shortcuts,
+  plus a generated service worker that precaches the game so it plays offline.
+- **Core Web Vitals** — two bundled font families with the three first-paint faces
+  preloaded, content-hashed immutable asset caching, `three.js` split into its own chunk,
+  no third-party requests, no ad or analytics scripts and no layout shift in the content.
+- **Trust and freshness** — `datePublished`/`dateModified` in structured data, `lastmod` in
+  the sitemap, a dated changelog and an RSS feed for the release notes, and security headers
+  (HSTS, `nosniff`, referrer policy, permissions policy).
+- **Crawler access** — explicit `Allow` rules for Googlebot, Bingbot, DuckDuckBot, Applebot
+  and the AI crawlers, with the sitemap declared in robots.txt.
+- **E-E-A-T for the creator** — `author`, `creator` and `publisher` meta tags, a `Person`
+  entity with `sameAs` links, and a creator section whose call to action is the same
+  portfolio link used on the InFinia Tools hub ("Reach Out to Uzair Ali For Your Work").
+
+### Working with it
+
+```sh
+# edit the copy, version, dates or creator details
+$EDITOR src/seo/config.ts src/seo/content.ts
+
+npm run seo:sync     # rewrite index.html and every crawler file
+npm test             # fails if index.html, a feed or a manifest drifted
+npm run build        # also writes dist/sw.js and preloads the fonts
+npm run seo:audit    # audits the built output: tags, JSON-LD, files, image sizes
+npm run art          # regenerates icons, social card and screenshots (needs the dev server)
+```
+
+`npm test` includes the SEO invariants: the embedded JSON-LD must equal the generated graph,
+every FAQ answer and HowTo step in structured data must also appear in the visible markup,
+the creator button must point at the portfolio, internal anchors must resolve, ids must be
+unique, and the static audit must report no errors.
+
+### After deploying
+
+1. Resubmit `https://surfer-pc.vercel.app/sitemap.xml` in Google Search Console and request
+   indexing for the home page; submit the same sitemap in Bing Webmaster Tools.
+2. Paste the URL into the Facebook Sharing Debugger and the LinkedIn Post Inspector once to
+   refresh their caches, and check the card in the X/Twitter validator.
+3. Run the URL through the Rich Results Test to confirm the `VideoGame`, `FAQPage` and
+   `HowTo` nodes are picked up.
+4. Re-run `npm run seo:audit` after the deploy; it fails loudly if a required tag or file
+   disappeared.
 
 ## Known limitations
 

@@ -150,6 +150,13 @@ await gameEval((g) => {
   g.paused = true;
 });
 const client = await page.context().newCDPSession(page);
+// The gesture checks below only verify how touches map to actions, so stop the
+// obstacle rows from moving: an unlucky collision would otherwise end the run
+// mid-sequence and fail the assertions at random. Real collisions are covered
+// by the 65-second survival run above.
+await gameEval((g) => {
+  g.encounters.update = () => {};
+});
 async function swipe(dx, dy) {
   await gameEval((g) => {
     g.paused = false;

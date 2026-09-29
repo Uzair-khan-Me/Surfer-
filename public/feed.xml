@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Afterlight Run — what's new</title>
+    <link>https://surfer-pc.vercel.app/</link>
+    <description>Play Afterlight Run free in your browser: a neon city 3D endless runner. Dodge trains, jump barriers, slide gates and chase your best score. No download.</description>
+    <language>en</language>
+    <lastBuildDate>Tue, 29 Sep 2026 09:00:00 GMT</lastBuildDate>
+    <atom:link href="https://surfer-pc.vercel.app/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Afterlight Run 1.1.0</title>
+      <link>https://surfer-pc.vercel.app/#changelog</link>
+      <guid isPermaLink="false">afterlight-run-1.1.0</guid>
+      <pubDate>Tue, 29 Sep 2026 09:00:00 GMT</pubDate>
+      <description>A full discoverability pass: structured data for the game, a written guide, the FAQ on this page and a social card for links. Installable app support so the whole game is cached and playable offline. A creator section with a direct line to the developer.</description>
+    </item>
+    <item>
+      <title>Afterlight Run 1.0.0</title>
+      <link>https://surfer-pc.vercel.app/#changelog</link>
+      <guid isPermaLink="false">afterlight-run-1.0.0</guid>
+      <description>Three-lane neon runner with a procedurally generated transit district. Adaptive quality tiers, contact shadows and pooled obstacle models. Coins, distance scoring, local personal bests and synthesised Web Audio sound effects — no downloaded audio files.</description>
+    </item>
+  </channel>
+</rss>
