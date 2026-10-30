@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://surfer-pc.vercel.app/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://surfer-pc.vercel.app/og-image.png</image:loc>
+      <image:title>Afterlight Run — Free 3D Endless Runner Browser Game (No Download)</image:title>
+      <image:caption>Play Afterlight Run instantly in your web browser: a three-lane 3D night transit endless runner with train dodging, barrier jumps, overhead gate slides, and 120 Hz physics.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://surfer-pc.vercel.app/gameplay-action.png</image:loc>
+      <image:title>Afterlight Run 3D Three-Lane Train Track Gameplay</image:title>
+      <image:caption>In-game WebGL2 screenshot of Afterlight Run showing three railway lanes, gold coin trails, orange barriers, overhead transit gates, and oncoming night trains.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://surfer-pc.vercel.app/games-like-subway-surfers</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://surfer-pc.vercel.app/gameplay-action.png</image:loc>
+      <image:title>Free Browser Games Like Subway Surfers — Three-Lane 3D Train Runner</image:title>
+      <image:caption>Three-lane 3D endless runner gameplay playable instantly in desktop, Chromebook, and mobile browsers with no app download.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://surfer-pc.vercel.app/surfer-runner-online</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://surfer-pc.vercel.app/no-download-browser-games</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://surfer-pc.vercel.app/chromebook-unblocked-runner</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://surfer-pc.vercel.app/how-to-play-guide</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+</urlset>

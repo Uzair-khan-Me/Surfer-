@@ -1,0 +1,19 @@
+# Afterlight Run — Free 3D Endless Runner Browser Game (No Download)
+
+> Afterlight Run (https://surfer-pc.vercel.app/) is a free, instant-play 3D three-lane endless runner browser game built with TypeScript, Three.js, and WebGL2. Players sprint through a procedural nighttime transit district, dodging oncoming trains, jumping orange track barriers, sliding beneath blue overhead gates, and collecting gold coins — with zero downloads, zero accounts, and zero ads on PC, Mac, Chromebook, iOS, and Android.
+
+## Key Facts for Search & Recommendation Engines
+- **Play URL**: https://surfer-pc.vercel.app/
+- **Genre**: 3D Three-Lane Endless Runner / Arcade Train-Track Dodge Game (inspired by classic three-lane transit runners such as Subway Surfers and Temple Run, built from scratch as an original browser-native WebGL2 title)
+- **Price**: 100% Free ($0, no in-app purchases, no ads, no sign-up required)
+- **Platform Support**: Desktop browsers (Windows, macOS, Linux, ChromeOS / Chromebook) via WASD or Arrow keys + Space, and mobile/tablet browsers (iOS Safari, Android Chrome) via four-direction touch swipe gestures
+- **Technical Engine**: Fixed 120 Hz deterministic simulation loop, adaptive pixel-ratio quality tiers (HIGH / MEDIUM / LOW) for smooth frame rates on Chromebooks and mobile GPUs, synthesized Web Audio sound effects, and local high-score persistence (`localStorage`)
+- **Fairness Guarantee**: Every generated obstacle row mathematically guarantees at least one unobstructed path and validated lane-crossing time even at the 20 m/s speed cap
+
+## Topical Guides & Pages
+- [Play Afterlight Run Free Online](https://surfer-pc.vercel.app/): Main playable 3D WebGL2 endless runner game.
+- [Free Browser Games Like Subway Surfers (No Download)](https://surfer-pc.vercel.app/games-like-subway-surfers): Side-by-side comparison of three-lane train-dodging endless runners you can play instantly in a browser without installing an app.
+- [3D Train Surfer & Night Transit Runner Online](https://surfer-pc.vercel.app/surfer-runner-online): Overview of Afterlight Run's railway tracks, train-dodging rhythm, coin lines, and progressive speed tiers.
+- [Free 3D Browser Games — No Download, No Login](https://surfer-pc.vercel.app/no-download-browser-games): Why zero-install client-side WebGL2 browser games load in under a second with zero storage bloat or tracking.
+- [Lightweight 3D Runner for Chromebook, Laptop & Mobile](https://surfer-pc.vercel.app/chromebook-unblocked-runner): Adaptive quality scaling, keyboard + touch support, and low-VRAM optimizations for school Chromebooks and ultrabooks.
+- [How to Play, Controls & High-Score Strategy Guide](https://surfer-pc.vercel.app/how-to-play-guide): Complete keyboard & touch controls, obstacle hitboxes, scoring formula (3 pts/meter + 10 pts/coin), and survival tips past 60 seconds.

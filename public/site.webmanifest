@@ -1,0 +1,53 @@
+{
+  "name": "Afterlight Run — Free 3D Endless Runner Browser Game",
+  "short_name": "Afterlight Run",
+  "description": "Play Afterlight Run free in your browser with no download or login. Sprint a 3D three-lane neon transit district, dodge oncoming trains, jump barriers, slide under gates, and chase high scores on PC, Chromebook, and mobile.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#071b22",
+  "theme_color": "#071b22",
+  "lang": "en",
+  "categories": ["games", "arcade", "action", "entertainment"],
+  "icons": [
+    {
+      "src": "/favicon-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/gameplay-action.png",
+      "sizes": "1200x675",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Afterlight Run three-lane 3D endless runner gameplay in browser"
+    },
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Afterlight Run — Free 3D Browser Endless Runner"
+    }
+  ]
+}
