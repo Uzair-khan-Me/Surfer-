@@ -34,6 +34,7 @@ canvas {
   width: 100vw;
   height: 100dvh;
   touch-action: none;
+  background: #102937 url("/menu-backdrop.webp") center / cover no-repeat;
 }
 #ui {
   isolation: isolate;

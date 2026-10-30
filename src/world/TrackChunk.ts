@@ -8,7 +8,6 @@ import { addTrackModel } from "../rendering/TrackModel";
 export class TrackChunk {
   group = new T.Group();
   constructor(index: number) {
-    addTrackModel(this.group);
     const details = addCityModel(this.group, index);
     if (index % 3 === 1) {
       for (const side of [-1, 1])
@@ -26,6 +25,7 @@ export class TrackChunk {
         index % 4 === 0 ? "#d5f884" : "#f4ad76",
       );
     batchStatic(this.group);
+    addTrackModel(this.group);
     this.group.add(details);
   }
 }

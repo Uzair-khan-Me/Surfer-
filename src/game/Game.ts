@@ -40,10 +40,14 @@ export class Game {
   audio = new AudioManager();
   private dpr = 0;
   private crashTime = 0;
+  private needsIdleRender = true;
   constructor() {
+    const coarse =
+      typeof matchMedia !== "undefined" &&
+      matchMedia("(pointer: coarse)").matches;
     this.renderer = new T.WebGLRenderer({
       canvas: document.querySelector("canvas")!,
-      antialias: true,
+      antialias: !coarse,
       powerPreference: "high-performance",
     });
     this.renderer.outputColorSpace = T.SRGBColorSpace;
@@ -164,6 +168,7 @@ export class Game {
     );
     this.renderer.setPixelRatio(this.dpr);
     this.renderer.setSize(innerWidth, innerHeight);
+    this.needsIdleRender = true;
   }
   setCamera(snap = false, dt = 0) {
     const menu = this.state === GameState.MENU;
@@ -211,7 +216,14 @@ export class Game {
       this.dpr
     )
       this.resize();
-    if (this.state === GameState.PLAYING && !this.paused) {
+    const activePlay = this.state === GameState.PLAYING && !this.paused;
+    const crashing = this.crashTime > 0;
+    if (!activePlay && !crashing && !this.needsIdleRender) {
+      this.last = 0;
+      return;
+    }
+    this.needsIdleRender = false;
+    if (activePlay) {
       this.accumulator += dt;
       while (this.accumulator >= 1 / 120 && this.state === GameState.PLAYING) {
         this.step(1 / 120);
@@ -227,10 +239,11 @@ export class Game {
       this.player.update(dt * 0.5);
       this.coins.update(dt, this.player, () => {}, false);
     }
-    if (this.crashTime > 0) {
+    if (crashing) {
       this.crashTime = Math.max(0, this.crashTime - dt);
       this.camera.position.x += Math.sin(now * 0.07) * this.crashTime * 0.12;
       this.player.group.rotation.z = -0.15;
+      if (this.crashTime === 0) this.needsIdleRender = true;
     }
     if (!this.paused) this.particles.update(dt);
     this.quality.apply();
