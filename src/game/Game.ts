@@ -15,6 +15,10 @@ import { Environment } from "../world/Environment";
 import { Particles } from "../world/Particles";
 import { AudioManager } from "../audio/AudioManager";
 import { UIManager } from "../ui/UIManager";
+import {
+  UniversalInputBridge,
+  isSmartTVBrowser,
+} from "../input/UniversalInputBridge";
 export class Game {
   scene = new T.Scene();
   camera = new T.PerspectiveCamera(55, innerWidth / innerHeight, 0.1, 260);
@@ -31,6 +35,7 @@ export class Game {
   score = new ScoreManager();
   difficulty = new DifficultyManager();
   input: InputManager;
+  bridge: UniversalInputBridge;
   ui: UIManager;
   state = GameState.MENU;
   paused = false;
@@ -47,7 +52,7 @@ export class Game {
       matchMedia("(pointer: coarse)").matches;
     this.renderer = new T.WebGLRenderer({
       canvas: document.querySelector("canvas")!,
-      antialias: !coarse,
+      antialias: !coarse && !isSmartTVBrowser(),
       powerPreference: "high-performance",
     });
     this.renderer.outputColorSpace = T.SRGBColorSpace;
@@ -74,6 +79,13 @@ export class Game {
       () => this.audio.toggle(),
       () => this.togglePause(),
     );
+    this.bridge = new UniversalInputBridge({
+      getState: () => this.state,
+      isPaused: () => this.paused,
+      isModalOpen: () => this.ui.helpOpen,
+      closeModals: () => this.ui.closeModals(),
+      act: (a) => this.act(a),
+    });
     this.ui.show(this.state, this.score);
     this.encounters.rows[0].group.position.z = -20;
     this.encounters.rows[0].obstacles[0].set("train", 2);
@@ -208,6 +220,7 @@ export class Game {
   }
   frame = (now: number) => {
     requestAnimationFrame(this.frame);
+    this.bridge.poll();
     const frameMs = this.last ? now - this.last : 0;
     const dt = this.last ? Math.min((now - this.last) / 1000, 0.1) : 0;
     this.last = now;

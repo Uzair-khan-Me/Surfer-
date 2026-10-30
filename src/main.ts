@@ -5,6 +5,7 @@ import "@fontsource/dm-sans/latin-400.css";
 import "@fontsource/dm-sans/latin-500.css";
 import "@fontsource/dm-sans/latin-700.css";
 import "./style.css";
+import { normalizeTVKey } from "./input/tvKey";
 import type { Game } from "./game/Game";
 
 const el = (id: string) => document.getElementById(id);
@@ -21,7 +22,11 @@ try {
 export let game: Game | undefined;
 let booting: Promise<Game> | null = null;
 let earlyMuted = false;
+let earlyNavActive = false;
+let earlyNavIndex = 0;
 let gameModulePromise: Promise<typeof import("./game/Game")> | null = null;
+
+const MENU_NAV_IDS = ["play", "sound", "about-button", "help-button"] as const;
 
 const loadModule = () => {
   if (!gameModulePromise) gameModulePromise = import("./game/Game");
@@ -87,18 +92,81 @@ if (soundBtn) {
   };
 }
 
+function clearEarlyFocus() {
+  earlyNavActive = false;
+  earlyNavIndex = 0;
+  for (const id of MENU_NAV_IDS) el(id)?.classList.remove("tv-focus");
+}
+
+function setEarlyFocus(index: number) {
+  const items = MENU_NAV_IDS.map((id) => el(id)).filter(
+    (node): node is HTMLElement => Boolean(node && !node.hidden),
+  );
+  if (!items.length) return;
+  earlyNavIndex = ((index % items.length) + items.length) % items.length;
+  earlyNavActive = true;
+  for (const node of items) node.classList.remove("tv-focus");
+  items[earlyNavIndex].classList.add("tv-focus");
+  items[earlyNavIndex].focus({ preventScroll: true });
+}
+
 function onEarlyKey(e: KeyboardEvent) {
-  if (e.code === "Escape") {
-    if (el("about") && !el("about")!.hidden) el("about")!.hidden = true;
-    else if (el("help") && !el("help")!.hidden) el("help")!.hidden = true;
+  const cmd = normalizeTVKey(e);
+  if (e.code === "Space" && !modalOpen()) {
+    e.preventDefault();
+    clearEarlyFocus();
+    void ensureGame(true);
     return;
   }
-  if ((e.code === "Enter" || e.code === "Space") && !modalOpen()) {
+  if (!cmd) return;
+
+  if (modalOpen()) {
+    if (cmd === "up" || cmd === "down") {
+      const card = document.querySelector<HTMLElement>(".about-card");
+      if (aboutOverlay && !aboutOverlay.hidden && card) {
+        card.scrollBy({ top: cmd === "down" ? 90 : -90, behavior: "smooth" });
+        e.preventDefault();
+      }
+      return;
+    }
+    if (cmd === "select" || cmd === "back") {
+      e.preventDefault();
+      if (el("about")) el("about")!.hidden = true;
+      if (el("help")) el("help")!.hidden = true;
+      clearEarlyFocus();
+    }
+    return;
+  }
+
+  if (cmd === "up" || cmd === "down" || cmd === "left" || cmd === "right") {
     e.preventDefault();
+    void loadModule();
+    if (!earlyNavActive) setEarlyFocus(cmd === "up" ? 1 : 0);
+    else
+      setEarlyFocus(earlyNavIndex + (cmd === "right" || cmd === "up" ? 1 : -1));
+    return;
+  }
+
+  if (cmd === "select" || cmd === "playpause") {
+    e.preventDefault();
+    if (cmd === "select" && earlyNavActive) {
+      const items = MENU_NAV_IDS.map((id) => el(id)).filter(
+        (node): node is HTMLElement => Boolean(node && !node.hidden),
+      );
+      const target = items[earlyNavIndex];
+      if (target && target.id !== "play") {
+        target.click();
+        return;
+      }
+    }
+    clearEarlyFocus();
     void ensureGame(true);
   }
 }
 addEventListener("keydown", onEarlyKey);
+addEventListener("gamepadconnected", () => void ensureGame(false), {
+  once: true,
+});
 
 async function ensureGame(startAfterLoad = false): Promise<Game> {
   if (game) {
@@ -108,6 +176,7 @@ async function ensureGame(startAfterLoad = false): Promise<Game> {
   if (!booting) {
     booting = loadModule().then(({ Game: GameClass }) => {
       removeEventListener("keydown", onEarlyKey);
+      clearEarlyFocus();
       const instance = new GameClass();
       const canvas = document.querySelector<HTMLCanvasElement>("canvas");
       if (canvas) canvas.style.backgroundImage = "none";
@@ -132,6 +201,7 @@ async function ensureGame(startAfterLoad = false): Promise<Game> {
 
 if (playBtn) {
   playBtn.onclick = () => {
+    clearEarlyFocus();
     void ensureGame(true);
   };
   playBtn.addEventListener("pointerenter", () => void loadModule(), {
@@ -144,8 +214,6 @@ if (playBtn) {
 if (import.meta.env.DEV) {
   void ensureGame(false);
 } else {
-  // In production, prefetch the Three.js + Game chunk silently during idle time
-  // without blocking initial paint or compiling WebGL shaders until interaction.
   // Prefetch Three.js + Game immediately on first pointer/touch activity, or after
   // initial visual assets (fonts + backdrop) finish settling on slow mobile networks.
   addEventListener("pointermove", () => void loadModule(), {
@@ -157,7 +225,7 @@ if (import.meta.env.DEV) {
     passive: true,
   });
   const schedulePrefetch = () => {
-    setTimeout(() => void loadModule(), 1800);
+    setTimeout(() => void loadModule(), 3200);
   };
   if (document.readyState === "complete") schedulePrefetch();
   else addEventListener("load", schedulePrefetch, { once: true });
